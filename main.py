@@ -1,12 +1,12 @@
 """
-Main entry point for AI Agent Suite
-Demonstrates all agents in one place
+Updated main entry point with Joke Generator
 """
 
 from agents.coding_assistant import CodingAssistant
 from agents.chatbot import ChatBot
 from agents.autonomous_agent import AutonomousAgent
 from agents.specialized_agent import SpecializedAgent
+from agents.joke_generator import JokeGenerator
 
 def print_menu():
     """Display the main menu"""
@@ -17,7 +17,8 @@ def print_menu():
     print("2. Chatbot")
     print("3. Autonomous Agent")
     print("4. Specialized Domain Agent")
-    print("5. Exit")
+    print("5. Joke Generator 🎭")
+    print("6. Exit")
     print("=" * 60)
 
 def coding_assistant_demo():
@@ -158,6 +159,62 @@ def specialized_agent_demo():
         result = agent.query_domain(query)
         print(f"\n{result}")
 
+def joke_generator_demo():
+    """Run joke generator demo"""
+    print("\n🎭 JOKE GENERATOR DEMO")
+    print("-" * 60)
+    
+    generator = JokeGenerator(provider="openai")
+    
+    while True:
+        print("\nWhat type of joke would you like?")
+        print("1. Random Joke")
+        print("2. Dad Joke")
+        print("3. Programming Joke")
+        print("4. Joke by Category")
+        print("5. AI-Generated Custom Joke")
+        print("6. Enhance a Joke")
+        print("7. Back to Main Menu")
+        
+        choice = input("\nEnter your choice (1-7): ").strip()
+        
+        if choice == "1":
+            print("\n🎯 Fetching random joke...")
+            joke = generator.get_random_joke()
+            print(generator.print_joke(joke))
+        
+        elif choice == "2":
+            print("\n🎯 Fetching dad joke...")
+            joke = generator.get_dad_joke()
+            print(generator.print_joke(joke))
+        
+        elif choice == "3":
+            print("\n🎯 Fetching programming joke...")
+            joke = generator.get_programming_joke()
+            print(generator.print_joke(joke))
+        
+        elif choice == "4":
+            print("\nAvailable categories: general, knock-knock, programming, miscellaneous, spooky, christmas")
+            category = input("Enter category: ").strip().lower()
+            print(f"\n🎯 Fetching {category} joke...")
+            joke = generator.get_joke_by_category(category)
+            print(generator.print_joke(joke))
+        
+        elif choice == "5":
+            topic = input("What topic should the joke be about? ")
+            print("\n🤖 Generating custom joke...")
+            joke = generator.generate_custom_joke(topic, style="funny")
+            print(f"\n{joke}\n")
+        
+        elif choice == "6":
+            joke_text = input("Enter the joke to enhance: ")
+            print("\n🤖 Enhancing joke...")
+            enhanced = generator.enhance_joke(joke_text)
+            print(f"\nEnhanced Joke:\n{enhanced}\n")
+        
+        elif choice == "7":
+            break
+
 def main():
     """Main application loop"""
     print("\n" + "🚀 " * 20)
@@ -166,7 +223,7 @@ def main():
     
     while True:
         print_menu()
-        choice = input("Enter your choice (1-5): ").strip()
+        choice = input("Enter your choice (1-6): ").strip()
         
         if choice == "1":
             coding_assistant_demo()
@@ -177,6 +234,8 @@ def main():
         elif choice == "4":
             specialized_agent_demo()
         elif choice == "5":
+            joke_generator_demo()
+        elif choice == "6":
             print("\n👋 Thank you for using AI Agent Suite!")
             print("Goodbye!\n")
             break
